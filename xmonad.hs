@@ -2,10 +2,11 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 import XMonad.Layout.Maximize
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
+import XMonad.Layout.ToggleLayouts
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig (additionalKeys)
 import qualified XMonad.StackSet as W
@@ -50,7 +51,7 @@ myConfig = ewmh defaultConfig { borderWidth = 1
 
 -- Layout
 -- Use `onWorkspaces' to configure layout on different workspaces.
-myLayout = maximize tiled ||| Mirror tiled ||| tabbed shrinkText defaultTheme ||| Full
+myLayout = toggleLayouts Full (maximize tiled) ||| Mirror tiled ||| tabbed shrinkText defaultTheme ||| Full
     where
         tiled = ResizableTall 1 (3/100) (1/2) []
 
@@ -61,6 +62,7 @@ myKeys = [ ((myModMask                 , xK_space    ), sendMessage NextLayout)
          , ((myModMask                 , xK_Return   ), spawn $ XMonad.terminal myConfig)
          , ((myModMask .|. shiftMask   , xK_Return   ), safeSpawn myBrowser [])
          , ((myModMask .|. controlMask , xK_Return   ), windows W.swapMaster)
+         , ((myModMask .|. controlMask , xK_space    ), sendMessage ToggleLayout)
          , ((myModMask                 , xK_a        ), sendMessage MirrorExpand)
          , ((myModMask                 , xK_z        ), sendMessage MirrorShrink)
          , ((myModMask                 , xK_backslash), withFocused (sendMessage . maximizeRestore))
