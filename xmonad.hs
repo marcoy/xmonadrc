@@ -3,6 +3,8 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Layout.Tabbed
+import XMonad.Layout.ResizableTile
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig (additionalKeys)
 
@@ -40,9 +42,15 @@ myConfig = ewmh defaultConfig { borderWidth = 1
                               , modMask     = myModMask
                               , terminal    = myTerminal
                               , manageHook  = manageDocks <+> myManageHook <+> manageHook defaultConfig
-                              , layoutHook  = avoidStruts  $  layoutHook defaultConfig
+                              , layoutHook  = avoidStruts  $  myLayout
                               , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
                               } `additionalKeys` myKeys
+
+-- Layout
+-- Use `onWorkspaces' to configure layout on different workspaces.
+myLayout = tiled ||| Mirror tiled ||| simpleTabbed ||| Full
+    where
+        tiled = ResizableTall 1 (3/100) (1/2) []
 
 -- Keys
 toggleStrutsKey' XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
@@ -50,4 +58,6 @@ toggleStrutsKey' XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 myKeys = [ ((myModMask               , xK_space ), sendMessage NextLayout)
          , ((myModMask               , xK_Return), spawn $ XMonad.terminal myConfig)
          , ((myModMask .|. shiftMask , xK_Return), safeSpawn myBrowser [])
+         , ((myModMask               , xK_a     ), sendMessage MirrorExpand)
+         , ((myModMask               , xK_z     ), sendMessage MirrorShrink)
          ]
