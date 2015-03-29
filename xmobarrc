@@ -1,0 +1,34 @@
+Config { font = "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
+       , additionalFonts = []
+       , borderColor = "black"
+       , border = BottomB
+       , bgColor = "black"
+       , fgColor = "#646464"
+       , alpha = 255
+       , position = TopW L 90
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Weather "KNYC" ["-t","NYC: <tempC>C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run Cpu ["-L","3","-H","50",
+                               "--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run Date "<fc=#ee9a00>%a %_d %b %H:%M</fc>" "date" 10
+                    , Run Volume "default" "Master" ["-t", "<volume>% <status>"] 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ %cpu% | %memory% | %date% | %KNYC% | %default:Master%"
+       }
