@@ -7,6 +7,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 
+import XMonad.Layout.Accordion
 import XMonad.Layout.Maximize
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
@@ -63,7 +64,7 @@ myXPConfig = defaultXPConfig { position = Top }
 
 -- Layout
 -- Use `onWorkspaces' to configure layout on different workspaces.
-myLayout = toggleLayouts Full (maximize tiled) ||| Mirror tiled ||| tabbed shrinkText defaultTheme
+myLayout = toggleLayouts Full (maximize tiled) ||| Mirror tiled ||| tabbed shrinkText defaultTheme ||| Accordion
     where
         tiled = ResizableTall 1 (3/100) (1/2) []
 
