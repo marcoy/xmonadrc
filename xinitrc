@@ -18,6 +18,8 @@ compton -cGb
 
 xsetroot -cursor_name left_ptr
 
+feh --recursive --randomize --bg-fill "~/Downloads/Wallpapers"
+
 xset r rate 150 65
 
 xmonad
