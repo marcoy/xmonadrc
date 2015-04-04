@@ -1,19 +1,24 @@
 import XMonad
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
+
 import XMonad.Layout.Maximize
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ToggleLayouts
+
 import XMonad.Util.Run(spawnPipe, safeSpawn)
 import XMonad.Util.EZConfig (additionalKeys)
+
 import qualified XMonad.StackSet as W
+
 
 import qualified Data.Map as M
 
-myModMask  = mod1Mask -- mod4Mask
+myModMask  = mod4Mask -- mod1Mask
 myTerminal = "lilyterm"
 myBrowser  = "chromium"
 
@@ -35,7 +40,7 @@ main = xmonad =<< statusBar barCmd pp toggleStrutsKey conf
 myPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
                  , ppHidden = xmobarColor "#C98F0A" ""
                  , ppHiddenNoWindows = xmobarColor "#C9A34E" ""
-                 , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]" 
+                 , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]"
                  , ppLayout = xmobarColor "#C9A34E" ""
                  , ppTitle =  xmobarColor "#C9A34E" "" . shorten 55
                  , ppSep = xmobarColor "#429942" "" " | "
@@ -51,7 +56,7 @@ myConfig = ewmh defaultConfig { borderWidth = 1
 
 -- Layout
 -- Use `onWorkspaces' to configure layout on different workspaces.
-myLayout = toggleLayouts Full (maximize tiled) ||| Mirror tiled ||| tabbed shrinkText defaultTheme ||| Full
+myLayout = toggleLayouts Full (maximize tiled) ||| Mirror tiled ||| tabbed shrinkText defaultTheme
     where
         tiled = ResizableTall 1 (3/100) (1/2) []
 
