@@ -25,11 +25,13 @@ myTerminal = "lilyterm"
 myBrowser  = "chromium"
 
 myManageHook = composeAll . concat $
-        [ [className =? f  --> doFloat      | f <- myFloats]
-        , [isFullscreen    --> doFullFloat                 ]
+        [ [className =? f  --> doFloat      | f <- myFloats ]
+        , [resource  =? i  --> doIgnore     | i <- myIgnores]
+        , [isFullscreen    --> doFullFloat                  ]
         ]
         where
             myFloats = ["Vlc", "Vncviewer"]
+            myIgnores = ["synapse"]
 
 main :: IO ()
 main = xmonad =<< statusBar barCmd pp toggleStrutsKey conf
@@ -70,6 +72,7 @@ toggleStrutsKey' XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 myKeys = [ ((myModMask                 , xK_space    ), sendMessage NextLayout)
          , ((myModMask                 , xK_Return   ), spawn $ XMonad.terminal myConfig)
+         , ((myModMask                 , xK_p        ), spawn "synapse")
          , ((myModMask .|. shiftMask   , xK_Return   ), safeSpawn myBrowser [])
          , ((myModMask .|. controlMask , xK_Return   ), windows W.swapMaster)
          , ((myModMask .|. controlMask , xK_space    ), sendMessage ToggleLayout)
