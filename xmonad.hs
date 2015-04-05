@@ -16,7 +16,7 @@ import XMonad.Layout.ToggleLayouts
 import XMonad.Prompt
 
 import XMonad.Util.Run(spawnPipe, safeSpawn)
-import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.EZConfig (additionalKeysP)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -48,7 +48,7 @@ myConfig = ewmh defaultConfig { borderWidth = 1
                               , manageHook  = manageDocks <+> myManageHook <+> manageHook defaultConfig
                               , layoutHook  = avoidStruts  $  myLayout
                               , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
-                              } `additionalKeys` myKeys
+                              } `additionalKeysP` myKeys
 
 -- PrettyPrinting for xmobar
 myPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
@@ -71,16 +71,18 @@ myLayout = toggleLayouts Full (maximize tiled) ||| Mirror tiled ||| tabbed shrin
 -- Keys
 toggleStrutsKey' XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-myKeys = [ ((myModMask                 , xK_space    ), sendMessage NextLayout)
-         , ((myModMask                 , xK_Return   ), spawn $ XMonad.terminal myConfig)
-         , ((myModMask                 , xK_p        ), spawn "synapse")
-         , ((myModMask .|. shiftMask   , xK_Return   ), safeSpawn myBrowser [])
-         , ((myModMask .|. controlMask , xK_Return   ), windows W.swapMaster)
-         , ((myModMask .|. controlMask , xK_space    ), sendMessage ToggleLayout)
-         , ((myModMask                 , xK_a        ), sendMessage MirrorExpand)
-         , ((myModMask                 , xK_z        ), sendMessage MirrorShrink)
-         , ((myModMask                 , xK_backslash), withFocused (sendMessage . maximizeRestore))
-         , ((myModMask                 , xK_g        ), tagPrompt myXPConfig (\s -> focusUpTaggedGlobal s))
-         , ((myModMask .|. controlMask , xK_g        ), tagDelPrompt myXPConfig)
-         , ((myModMask .|. shiftMask   , xK_g        ), tagPrompt myXPConfig (\s -> withFocused (addTag s)))
+myKeys = [ ("M-<Space>"             , sendMessage NextLayout)
+         , ("M-<Return>"            , spawn $ XMonad.terminal myConfig)
+         , ("M-p"                   , spawn "synapse")
+         , ("M-S-<Return>"          , safeSpawn myBrowser [])
+         , ("M-C-<Return>"          , windows W.swapMaster)
+         , ("M-C-<Space>"           , sendMessage ToggleLayout)
+         , ("M-a"                   , sendMessage MirrorExpand)
+         , ("M-z"                   , sendMessage MirrorShrink)
+         , ("M-\\"                  , withFocused (sendMessage . maximizeRestore))
+         , ("M-g"                   , tagPrompt myXPConfig (\s -> focusUpTaggedGlobal s))
+         , ("M-C-g"                 , tagDelPrompt myXPConfig)
+         , ("M-S-g"                 , tagPrompt myXPConfig (\s -> withFocused (addTag s)))
+         , ("<XF86AudioLowerVolume>", spawn "amixer set Master 1-")
+         , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 1+")
          ]
