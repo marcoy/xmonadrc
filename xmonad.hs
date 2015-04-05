@@ -48,6 +48,7 @@ myConfig = ewmh defaultConfig { borderWidth = 1
                               , manageHook  = manageDocks <+> myManageHook <+> manageHook defaultConfig
                               , layoutHook  = avoidStruts  $  myLayout
                               , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
+                              , focusedBorderColor = "darkorange"
                               } `additionalKeysP` myKeys
 
 -- PrettyPrinting for xmobar
