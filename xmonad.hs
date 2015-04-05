@@ -60,6 +60,7 @@ myPP = defaultPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
                  , ppSep = xmobarColor "#429942" "" " | "
                  }
 
+-- XMonad Prompt
 myXPConfig = defaultXPConfig { position = Top }
 
 -- Layout

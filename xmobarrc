@@ -15,12 +15,12 @@ Config { font = "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Weather "KNYC" ["-t","NYC: <tempC>C",
+       , commands = [ Run Weather "KNYC" ["-t","NYC: <tempC>C <skyCondition>",
                                           "-L","18","-H","25",
                                           "--normal","green",
                                           "--high","red",
                                           "--low","lightblue"] 36000
-                    , Run Cpu ["-L","3","-H","50",
+                    , Run Cpu ["-L","0","-H","50",
                                "--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
