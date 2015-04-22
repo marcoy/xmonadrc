@@ -85,6 +85,7 @@ myKeys = [ ("M-<Space>"             , sendMessage NextLayout)
          , ("M-g"                   , tagPrompt myXPConfig (\s -> focusUpTaggedGlobal s))
          , ("M-C-g"                 , tagDelPrompt myXPConfig)
          , ("M-S-g"                 , tagPrompt myXPConfig (\s -> withFocused (addTag s)))
+         , ("M-i"                   , spawn "xcalib -invert -alter")
          , ("<XF86AudioLowerVolume>", spawn "amixer set Master 1-")
          , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 1+")
          ]
