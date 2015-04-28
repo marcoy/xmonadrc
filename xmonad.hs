@@ -1,3 +1,7 @@
+import DBus.Client
+
+import System.Taffybar.XMonadLog ( dbusLog )
+
 import XMonad
 
 import XMonad.Actions.TagWindows
@@ -35,12 +39,15 @@ myManageHook = composeAll . concat $
             myIgnores = ["synapse"]
 
 main :: IO ()
-main = xmonad =<< statusBar barCmd pp toggleStrutsKey conf
-        where
-            barCmd = "/usr/bin/xmobar /home/marcoy/.xmonad/xmobarrc"
-            pp     = myPP
-            conf   = myConfig
-            toggleStrutsKey = toggleStrutsKey'
+main = do
+        client <- connectSession
+        -- spawn "/usr/bin/taffybar"
+        xmonad =<< statusBar barCmd pp toggleStrutsKey conf
+       where
+        barCmd = "/usr/bin/xmobar /home/marcoy/.xmonad/xmobarrc"
+        pp     = myPP
+        conf   = myConfig
+        toggleStrutsKey = toggleStrutsKey'
 
 myConfig = ewmh defaultConfig { borderWidth = 1
                               , modMask     = myModMask
