@@ -1,6 +1,4 @@
-import DBus.Client
-
-import System.Taffybar.XMonadLog ( dbusLog )
+import System.Taffybar.Hooks.PagerHints (pagerHints)
 
 import XMonad
 
@@ -40,16 +38,17 @@ myManageHook = composeAll . concat $
 
 main :: IO ()
 main = do
-        client <- connectSession
-        -- spawn "/usr/bin/taffybar"
-        xmonad =<< statusBar barCmd pp toggleStrutsKey conf
+        spawn "/usr/bin/taffybar"
+        xmonad conf
+        -- xmonad =<< statusBar barCmd pp toggleStrutsKey conf
        where
         barCmd = "/usr/bin/xmobar /home/marcoy/.xmonad/xmobarrc"
         pp     = myPP
         conf   = myConfig
         toggleStrutsKey = toggleStrutsKey'
 
-myConfig = ewmh defaultConfig { borderWidth = 1
+myConfig = ewmh $ pagerHints $ defaultConfig {
+                                borderWidth = 1
                               , modMask     = myModMask
                               , terminal    = myTerminal
                               , manageHook  = manageDocks <+> myManageHook <+> manageHook defaultConfig
