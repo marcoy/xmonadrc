@@ -12,6 +12,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 export _JAVA_AWT_WM_NONREPARENTING=1
+wmname LG3D
 
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
        --expand true --width 10 --transparent true --tint 0x191970 --height 12 &

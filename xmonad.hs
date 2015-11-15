@@ -7,6 +7,7 @@ import XMonad.Actions.TagWindows
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
 
 import XMonad.Layout.Accordion
@@ -39,7 +40,7 @@ myManageHook = composeAll . concat $
 main :: IO ()
 main = do
         spawn "/usr/bin/taffybar"
-        xmonad conf
+        xmonad conf { startupHook = startupHook myConfig >> setWMName "LG3D" }
         -- xmonad =<< statusBar barCmd pp toggleStrutsKey conf
        where
         barCmd = "/usr/bin/xmobar /home/marcoy/.xmonad/xmobarrc"
