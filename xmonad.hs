@@ -29,13 +29,16 @@ myTerminal = "lilyterm"
 myBrowser  = "chromium"
 
 myManageHook = composeAll . concat $
-        [ [className =? f  --> doFloat      | f <- myFloats ]
-        , [resource  =? i  --> doIgnore     | i <- myIgnores]
-        , [isFullscreen    --> doFullFloat                  ]
+        [ [className =? f --> unfloat     | f <- myUnfloats]
+        , [className =? f --> doFloat     | f <- myFloats  ]
+        , [resource  =? i --> doIgnore    | i <- myIgnores ]
+        , [isFullscreen   --> doFullFloat                  ]
         ]
         where
-            myFloats = ["Vlc", "Vncviewer"]
-            myIgnores = ["synapse"]
+            unfloat    = ask >>= doF . W.sink
+            myUnfloats = []
+            myFloats   = ["Vlc", "Vncviewer"]
+            myIgnores  = ["synapse"]
 
 main :: IO ()
 main = do
