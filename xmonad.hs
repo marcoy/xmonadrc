@@ -25,7 +25,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
 myModMask  = mod4Mask -- mod1Mask
-myTerminal = "lilyterm"
+myTerminal = "terminix"
 myBrowser  = "chromium"
 
 myManageHook = composeAll . concat $
